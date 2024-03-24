@@ -21,28 +21,28 @@ import (
 type SysExportTemplateService struct {
 }
 
-// CreateSysExportTemplate 创建导出模板记录
+// CreateSysExportTemplate creates export template records
 // Author [piexlmax](https://github.com/piexlmax)
 func (sysExportTemplateService *SysExportTemplateService) CreateSysExportTemplate(sysExportTemplate *system.SysExportTemplate) (err error) {
 	err = global.GVA_DB.Create(sysExportTemplate).Error
 	return err
 }
 
-// DeleteSysExportTemplate 删除导出模板记录
+// DeleteSysExportTemplate deletes the export template record
 // Author [piexlmax](https://github.com/piexlmax)
 func (sysExportTemplateService *SysExportTemplateService) DeleteSysExportTemplate(sysExportTemplate system.SysExportTemplate) (err error) {
 	err = global.GVA_DB.Delete(&sysExportTemplate).Error
 	return err
 }
 
-// DeleteSysExportTemplateByIds 批量删除导出模板记录
+// DeleteSysExportTemplateByIds delete export template records in batches
 // Author [piexlmax](https://github.com/piexlmax)
 func (sysExportTemplateService *SysExportTemplateService) DeleteSysExportTemplateByIds(ids request.IdsReq) (err error) {
 	err = global.GVA_DB.Delete(&[]system.SysExportTemplate{}, "id in ?", ids.Ids).Error
 	return err
 }
 
-// UpdateSysExportTemplate 更新导出模板记录
+// UpdateSysExportTemplate updates export template records
 // Author [piexlmax](https://github.com/piexlmax)
 func (sysExportTemplateService *SysExportTemplateService) UpdateSysExportTemplate(sysExportTemplate system.SysExportTemplate) (err error) {
 	return global.GVA_DB.Transaction(func(tx *gorm.DB) error {
@@ -66,22 +66,22 @@ func (sysExportTemplateService *SysExportTemplateService) UpdateSysExportTemplat
 	})
 }
 
-// GetSysExportTemplate 根据id获取导出模板记录
+// GetSysExportTemplate Gets the export template record based on id
 // Author [piexlmax](https://github.com/piexlmax)
 func (sysExportTemplateService *SysExportTemplateService) GetSysExportTemplate(id uint) (sysExportTemplate system.SysExportTemplate, err error) {
 	err = global.GVA_DB.Where("id = ?", id).Preload("Conditions").First(&sysExportTemplate).Error
 	return
 }
 
-// GetSysExportTemplateInfoList 分页获取导出模板记录
+// GetSysExportTemplateInfoList Gets export template records in paging
 // Author [piexlmax](https://github.com/piexlmax)
 func (sysExportTemplateService *SysExportTemplateService) GetSysExportTemplateInfoList(info systemReq.SysExportTemplateSearch) (list []system.SysExportTemplate, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
-	// 创建db
+//Create db
 	db := global.GVA_DB.Model(&system.SysExportTemplate{})
 	var sysExportTemplates []system.SysExportTemplate
-	// 如果有条件搜索 下方会自动创建搜索语句
+// If there is a conditional search, the search statement will be automatically created below
 	if info.StartCreatedAt != nil && info.EndCreatedAt != nil {
 		db = db.Where("created_at BETWEEN ? AND ?", info.StartCreatedAt, info.EndCreatedAt)
 	}
@@ -107,7 +107,7 @@ func (sysExportTemplateService *SysExportTemplateService) GetSysExportTemplateIn
 	return sysExportTemplates, total, err
 }
 
-// ExportExcel 导出Excel
+// ExportExcel export Excel
 // Author [piexlmax](https://github.com/piexlmax)
 func (sysExportTemplateService *SysExportTemplateService) ExportExcel(templateID string, values url.Values) (file *bytes.Buffer, name string, err error) {
 	var template system.SysExportTemplate
@@ -160,7 +160,7 @@ func (sysExportTemplateService *SysExportTemplateService) ExportExcel(templateID
 			}
 		}
 	}
-	// 通过参数传入limit
+	// Pass in limit through parameters
 	limit := values.Get("limit")
 	if limit != "" {
 		l, e := strconv.Atoi(limit)
@@ -168,12 +168,12 @@ func (sysExportTemplateService *SysExportTemplateService) ExportExcel(templateID
 			db = db.Limit(l)
 		}
 	}
-	// 模板的默认limit
+	//The default limit of the template
 	if limit == "" && template.Limit != 0 {
 		db = db.Limit(template.Limit)
 	}
 
-	// 通过参数传入offset
+	// Pass in offset through parameters
 	offset := values.Get("offset")
 	if offset != "" {
 		o, e := strconv.Atoi(offset)
@@ -182,12 +182,12 @@ func (sysExportTemplateService *SysExportTemplateService) ExportExcel(templateID
 		}
 	}
 
-	// 通过参数传入order
+	// Pass in order through parameters
 	order := values.Get("order")
 	if order != "" {
 		db = db.Order(order)
 	}
-	// 模板的默认order
+	//The default order of the template
 	if order == "" && template.Order != "" {
 		db = db.Order(template.Order)
 	}
@@ -222,7 +222,7 @@ func (sysExportTemplateService *SysExportTemplateService) ExportExcel(templateID
 	return file, template.Name, nil
 }
 
-// ExportTemplate 导出Excel模板
+// ExportTemplate exports Excel template
 // Author [piexlmax](https://github.com/piexlmax)
 func (sysExportTemplateService *SysExportTemplateService) ExportTemplate(templateID string) (file *bytes.Buffer, name string, err error) {
 	var template system.SysExportTemplate
@@ -266,7 +266,7 @@ func (sysExportTemplateService *SysExportTemplateService) ExportTemplate(templat
 	return file, template.Name, nil
 }
 
-// ImportExcel 导入Excel
+// ImportExcel Import Excel
 // Author [piexlmax](https://github.com/piexlmax)
 func (sysExportTemplateService *SysExportTemplateService) ImportExcel(templateID string, file *multipart.FileHeader) (err error) {
 	var template system.SysExportTemplate

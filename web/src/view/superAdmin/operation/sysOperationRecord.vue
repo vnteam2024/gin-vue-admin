@@ -5,22 +5,22 @@
         :inline="true"
         :model="searchInfo"
       >
-        <el-form-item label="请求方法">
+<el-form-item label="Request method">
           <el-input
             v-model="searchInfo.method"
-            placeholder="搜索条件"
+placeholder="Search criteria"
           />
         </el-form-item>
-        <el-form-item label="请求路径">
+<el-form-item label="Request path">
           <el-input
             v-model="searchInfo.path"
-            placeholder="搜索条件"
+placeholder="Search criteria"
           />
         </el-form-item>
-        <el-form-item label="结果状态码">
+<el-form-item label="Result status code">
           <el-input
             v-model="searchInfo.status"
-            placeholder="搜索条件"
+placeholder="Search criteria"
           />
         </el-form-item>
         <el-form-item>
@@ -28,11 +28,11 @@
             type="primary"
             icon="search"
             @click="onSubmit"
-          >查询</el-button>
+>Query</el-button>
           <el-button
             icon="refresh"
             @click="onReset"
-          >重置</el-button>
+>Reset</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -42,7 +42,7 @@
           icon="delete"
           :disabled="!multipleSelection.length"
           @click="onDelete"
-        >删除</el-button>
+>Delete</el-button>
       </div>
       <el-table
         ref="multipleTable"
@@ -59,7 +59,7 @@
         />
         <el-table-column
           align="left"
-          label="操作人"
+label="operator"
           width="140"
         >
           <template #default="scope">
@@ -68,14 +68,14 @@
         </el-table-column>
         <el-table-column
           align="left"
-          label="日期"
+label="date"
           width="180"
         >
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
         </el-table-column>
         <el-table-column
           align="left"
-          label="状态码"
+label="status code"
           prop="status"
           width="120"
         >
@@ -87,25 +87,25 @@
         </el-table-column>
         <el-table-column
           align="left"
-          label="请求IP"
+label="Request IP"
           prop="ip"
           width="120"
         />
         <el-table-column
           align="left"
-          label="请求方法"
+label="Request method"
           prop="method"
           width="120"
         />
         <el-table-column
           align="left"
-          label="请求路径"
+label="request path"
           prop="path"
           width="240"
         />
         <el-table-column
           align="left"
-          label="请求"
+label="Request"
           prop="path"
           width="80"
         >
@@ -123,13 +123,13 @@
                 </template>
               </el-popover>
 
-              <span v-else>无</span>
+<span v-else>None</span>
             </div>
           </template>
         </el-table-column>
         <el-table-column
           align="left"
-          label="响应"
+label="response"
           prop="path"
           width="80"
         >
@@ -146,13 +146,13 @@
                   <el-icon style="cursor: pointer;"><warning /></el-icon>
                 </template>
               </el-popover>
-              <span v-else>无</span>
+<span v-else>None</span>
             </div>
           </template>
         </el-table-column>
         <el-table-column
           align="left"
-          label="操作"
+label="operation"
         >
           <template #default="scope">
             <el-button
@@ -160,7 +160,7 @@
               type="primary"
               link
               @click="deleteSysOperationRecordFunc(scope.row)"
-            >删除</el-button>
+>Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -184,7 +184,7 @@ import {
   deleteSysOperationRecord,
   getSysOperationRecordList,
   deleteSysOperationRecordByIds
-} from '@/api/sysOperationRecord' // 此处请自行替换地址
+} from '@/api/sysOperationRecord' // Please replace the address here.
 import { formatDate } from '@/utils/format'
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -201,7 +201,7 @@ const searchInfo = ref({})
 const onReset = () => {
   searchInfo.value = {}
 }
-// 条件搜索前端看此方法
+// See this method for conditional search front-end
 const onSubmit = () => {
   page.value = 1
   pageSize.value = 10
@@ -211,7 +211,7 @@ const onSubmit = () => {
   getTableData()
 }
 
-// 分页
+// paging
 const handleSizeChange = (val) => {
   pageSize.value = val
   getTableData()
@@ -222,7 +222,7 @@ const handleCurrentChange = (val) => {
   getTableData()
 }
 
-// 查询
+// Inquire
 const getTableData = async() => {
   const table = await getSysOperationRecordList({
     page: page.value,
@@ -244,9 +244,9 @@ const handleSelectionChange = (val) => {
   multipleSelection.value = val
 }
 const onDelete = async() => {
-  ElMessageBox.confirm('确定要删除吗?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+ElMessageBox.confirm('Are you sure you want to delete?', 'Prompt', {
+confirmButtonText: 'OK',
+cancelButtonText: 'Cancel',
     type: 'warning'
   }).then(async() => {
     const ids = []
@@ -258,7 +258,7 @@ const onDelete = async() => {
     if (res.code === 0) {
       ElMessage({
         type: 'success',
-        message: '删除成功'
+message: 'Delete successfully'
       })
       if (tableData.value.length === ids.length && page.value > 1) {
         page.value--
@@ -268,16 +268,16 @@ const onDelete = async() => {
   })
 }
 const deleteSysOperationRecordFunc = async(row) => {
-  ElMessageBox.confirm('确定要删除吗?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+ElMessageBox.confirm('Are you sure you want to delete?', 'Prompt', {
+confirmButtonText: 'OK',
+cancelButtonText: 'Cancel',
     type: 'warning'
   }).then(async() => {
     const res = await deleteSysOperationRecord({ ID: row.ID })
     if (res.code === 0) {
       ElMessage({
         type: 'success',
-        message: '删除成功'
+message: 'Delete successfully'
       })
       if (tableData.value.length === 1 && page.value > 1) {
         page.value--

@@ -1,17 +1,17 @@
 <template>
   <div>
     <warning-bar
-      title="获取字典且缓存方法已在前端utils/dictionary 已经封装完成 不必自己书写 使用方法查看文件内注释"
+title="Get the dictionary and the caching method has been encapsulated in the front-end utils/dictionary. You don't have to write it yourself. Use the method to view the comments in the file"
     />
     <div class="dict-box flex gap-4">
       <div class="w-64 bg-white p-4">
         <div class="flex justify-between items-center">
-          <span class="text font-bold">字典列表</span>
+<span class="text font-bold">Dictionary list</span>
           <el-button
             type="primary"
             @click="openDialog"
           >
-            新增
+New
           </el-button>
         </div>
         <el-scrollbar
@@ -52,7 +52,7 @@
     <el-dialog
       v-model="dialogFormVisible"
       :before-close="closeDialog"
-      :title="type==='create'?'添加字典':'修改字典'"
+:title="type==='create'?'Add dictionary':'Modify dictionary'"
     >
       <el-form
         ref="dialogForm"
@@ -61,45 +61,45 @@
         label-width="110px"
       >
         <el-form-item
-          label="字典名（中）"
+label="Dictionary name (medium)"
           prop="name"
         >
           <el-input
             v-model="formData.name"
-            placeholder="请输入字典名（中）"
+placeholder="Please enter the dictionary name (medium)"
             clearable
             :style="{ width: '100%' }"
           />
         </el-form-item>
         <el-form-item
-          label="字典名（英）"
+label="Dictionary name (English)"
           prop="type"
         >
           <el-input
             v-model="formData.type"
-            placeholder="请输入字典名（英）"
+placeholder="Please enter the dictionary name (English)"
             clearable
             :style="{ width: '100%' }"
           />
         </el-form-item>
         <el-form-item
-          label="状态"
+label="status"
           prop="status"
           required
         >
           <el-switch
             v-model="formData.status"
-            active-text="开启"
-            inactive-text="停用"
+active-text="Open"
+inactive-text="Inactive"
           />
         </el-form-item>
         <el-form-item
-          label="描述"
+label="description"
           prop="desc"
         >
           <el-input
             v-model="formData.desc"
-            placeholder="请输入描述"
+placeholder="Please enter a description"
             clearable
             :style="{ width: '100%' }"
           />
@@ -107,12 +107,12 @@
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="closeDialog">取 消</el-button>
+<el-button @click="closeDialog">Cancel</el-button>
           <el-button
 
             type="primary"
             @click="enterDialog"
-          >确 定</el-button>
+>Confirm</el-button>
         </div>
       </template>
     </el-dialog>
@@ -126,7 +126,7 @@ import {
   updateSysDictionary,
   findSysDictionary,
   getSysDictionaryList,
-} from '@/api/sysDictionary' // 此处请自行替换地址
+} from '@/api/sysDictionary' // Please replace the address here.
 import WarningBar from '@/components/warningBar/warningBar.vue'
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -150,21 +150,21 @@ const rules = ref({
   name: [
     {
       required: true,
-      message: '请输入字典名（中）',
+message: 'Please enter the dictionary name (medium)',
       trigger: 'blur',
     },
   ],
   type: [
     {
       required: true,
-      message: '请输入字典名（英）',
+message: 'Please enter the dictionary name (English)',
       trigger: 'blur',
     },
   ],
   desc: [
     {
       required: true,
-      message: '请输入描述',
+message: 'Please enter a description',
       trigger: 'blur',
     },
   ],
@@ -172,7 +172,7 @@ const rules = ref({
 
 const dictionaryData = ref([])
 
-// 查询
+// Inquire
 const getTableData = async() => {
   const res = await getSysDictionaryList()
   if (res.code === 0) {
@@ -206,16 +206,16 @@ const closeDialog = () => {
   }
 }
 const deleteSysDictionaryFunc = async(row) => {
-  ElMessageBox.confirm('确定要删除吗?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+ElMessageBox.confirm('Are you sure you want to delete?', 'Prompt', {
+confirmButtonText: 'OK',
+cancelButtonText: 'Cancel',
     type: 'warning'
   }).then(async() => {
     const res = await deleteSysDictionary({ ID: row.ID })
     if (res.code === 0) {
       ElMessage({
         type: 'success',
-        message: '删除成功',
+message: 'Delete successfully',
       })
       getTableData()
     }
@@ -239,7 +239,7 @@ const enterDialog = async() => {
         break
     }
     if (res.code === 0) {
-      ElMessage.success('操作成功')
+ElMessage.success('Operation successful')
       closeDialog()
       getTableData()
     }

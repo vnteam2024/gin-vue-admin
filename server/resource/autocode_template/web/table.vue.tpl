@@ -3,38 +3,38 @@
     <div class="gva-search-box">
       <el-form ref="elSearchFormRef" :inline="true" :model="searchInfo" class="demo-form-inline" :rules="searchRule" @keyup.enter="onSubmit">
       {{- if .GvaModel }}
-      <el-form-item label="创建日期" prop="createdAt">
+<el-form-item label="Creation date" prop="createdAt">
       <template #label>
         <span>
-          创建日期
-          <el-tooltip content="搜索范围是开始日期（包含）至结束日期（不包含）">
+Creation date
+<el-tooltip content="The search range is from start date (inclusive) to end date (exclusive)">
             <el-icon><QuestionFilled /></el-icon>
           </el-tooltip>
         </span>
       </template>
-      <el-date-picker v-model="searchInfo.startCreatedAt" type="datetime" placeholder="开始日期" :disabled-date="time=> searchInfo.endCreatedAt ? time.getTime() > searchInfo.endCreatedAt.getTime() : false"></el-date-picker>
+<el-date-picker v-model="searchInfo.startCreatedAt" type="datetime" placeholder="Start Date" :disabled-date="time=> searchInfo.endCreatedAt ? time.getTime() > searchInfo.endCreatedAt.getTime () : false"></el-date-picker>
        —
-      <el-date-picker v-model="searchInfo.endCreatedAt" type="datetime" placeholder="结束日期" :disabled-date="time=> searchInfo.startCreatedAt ? time.getTime() < searchInfo.startCreatedAt.getTime() : false"></el-date-picker>
+<el-date-picker v-model="searchInfo.endCreatedAt" type="datetime" placeholder="End Date" :disabled-date="time=> searchInfo.startCreatedAt ? time.getTime() < searchInfo.startCreatedAt.getTime () : false"></el-date-picker>
       </el-form-item>
       {{ end -}}
            {{- range .Fields}}  {{- if .FieldSearchType}} {{- if eq .FieldType "bool" }}
             <el-form-item label="{{.FieldDesc}}" prop="{{.FieldJson}}">
-            <el-select v-model="searchInfo.{{.FieldJson}}" clearable placeholder="请选择">
+<el-select v-model="searchInfo.{{.FieldJson}}" clearable placeholder="Please select">
                 <el-option
                     key="true"
-                    label="是"
+label="yes"
                     value="true">
                 </el-option>
                 <el-option
                     key="false"
-                    label="否"
+label="No"
                     value="false">
                 </el-option>
             </el-select>
             </el-form-item>
            {{- else if .DictType}}
            <el-form-item label="{{.FieldDesc}}" prop="{{.FieldJson}}">
-            <el-select v-model="searchInfo.{{.FieldJson}}" clearable placeholder="请选择" @clear="()=>{searchInfo.{{.FieldJson}}=undefined}">
+<el-select v-model="searchInfo.{{.FieldJson}}" clearable placeholder="Please select" @clear="()=>{searchInfo.{{.FieldJson}}=undefined}">
               <el-option v-for="(item,key) in {{ .DictType }}Options" :key="key" :label="item.label" :value="item.value" />
             </el-select>
             </el-form-item>
@@ -42,16 +42,16 @@
         <el-form-item label="{{.FieldDesc}}" prop="{{.FieldJson}}">
         {{- if eq .FieldType "float64" "int"}}
             {{if eq .FieldSearchType "BETWEEN" "NOT BETWEEN"}}
-            <el-input v-model.number="searchInfo.start{{.FieldName}}" placeholder="最小值" />
+<el-input v-model.number="searchInfo.start{{.FieldName}}" placeholder="minimum value" />
             —
-            <el-input v-model.number="searchInfo.end{{.FieldName}}" placeholder="最大值" />
+<el-input v-model.number="searchInfo.end{{.FieldName}}" placeholder="maximum value" />
            {{- else}}
              {{- if .DictType}}
-              <el-select v-model="searchInfo.{{.FieldJson}}" placeholder="请选择" style="width:100%" :clearable="true" >
+<el-select v-model="searchInfo.{{.FieldJson}}" placeholder="Please select" style="width:100%" :clearable="true" >
                <el-option v-for="(item,key) in {{ .DictType }}Options" :key="key" :label="item.label" :value="item.value" />
              </el-select>
                     {{- else}}
-             <el-input v-model.number="searchInfo.{{.FieldJson}}" placeholder="搜索条件" />
+<el-input v-model.number="searchInfo.{{.FieldJson}}" placeholder="Search criteria" />
                     {{- end }}
           {{- end}}
         {{- else if eq .FieldType "time.Time"}}
@@ -59,32 +59,32 @@
             <template #label>
             <span>
               {{.FieldDesc}}
-              <el-tooltip content="搜索范围是开始日期（包含）至结束日期（不包含）">
+<el-tooltip content="The search range is from start date (inclusive) to end date (exclusive)">
                 <el-icon><QuestionFilled /></el-icon>
               </el-tooltip>
             </span>
           </template>
-            <el-date-picker v-model="searchInfo.start{{.FieldName}}" type="datetime" placeholder="开始日期" :disabled-date="time=> searchInfo.end{{.FieldName}} ? time.getTime() > searchInfo.end{{.FieldName}}.getTime() : false"></el-date-picker>
+<el-date-picker v-model="searchInfo.start{{.FieldName}}" type="datetime" placeholder="Start Date" :disabled-date="time=> searchInfo.end{{.FieldName}} ? time.getTime() > searchInfo.end{{.FieldName}}.getTime() : false"></el-date-picker>
             —
-            <el-date-picker v-model="searchInfo.end{{.FieldName}}" type="datetime" placeholder="结束日期" :disabled-date="time=> searchInfo.start{{.FieldName}} ? time.getTime() < searchInfo.start{{.FieldName}}.getTime() : false"></el-date-picker>
+<el-date-picker v-model="searchInfo.end{{.FieldName}}" type="datetime" placeholder="End Date" :disabled-date="time=> searchInfo.start{{.FieldName}} ? time.getTime() < searchInfo.start{{.FieldName}}.getTime() : false"></el-date-picker>
            {{- else}}
-           <el-date-picker v-model="searchInfo.{{.FieldJson}}" type="datetime" placeholder="搜索条件"></el-date-picker>
+<el-date-picker v-model="searchInfo.{{.FieldJson}}" type="datetime" placeholder="search criteria"></el-date-picker>
           {{- end}}
         {{- else}}
-         <el-input v-model="searchInfo.{{.FieldJson}}" placeholder="搜索条件" />
+<el-input v-model="searchInfo.{{.FieldJson}}" placeholder="Search criteria" />
         {{- end}}
 
         </el-form-item>{{ end }}{{ end }}{{ end }}
         <el-form-item>
-          <el-button type="primary" icon="search" @click="onSubmit">查询</el-button>
-          <el-button icon="refresh" @click="onReset">重置</el-button>
+<el-button type="primary" icon="search" @click="onSubmit">Query</el-button>
+<el-button icon="refresh" @click="onReset">Reset</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="gva-table-box">
         <div class="gva-btn-list">
-            <el-button type="primary" icon="plus" @click="openDialog">新增</el-button>
-            <el-button icon="delete" style="margin-left: 10px;" :disabled="!multipleSelection.length" @click="onDelete">删除</el-button>
+<el-button type="primary" icon="plus" @click="openDialog">New</el-button>
+            <el-button icon="delete" style="margin-left: 10px;" :disabled="!multipleSelection.length" @click="onDelete">Delete</el-button>
         </div>
         <el-table
         ref="multipleTable"
@@ -99,7 +99,7 @@
         >
         <el-table-column type="selection" width="55" />
         {{ if .GvaModel }}
-        <el-table-column align="left" label="日期" width="180">
+<el-table-column align="left" label="Date" width="180">
             <template #default="scope">{{ "{{ formatDate(scope.row.CreatedAt) }}" }}</template>
         </el-table-column>
         {{ end }}
@@ -147,7 +147,7 @@
            {{- else if eq .FieldType "richtext" }}
                       <el-table-column label="{{.FieldDesc}}" width="200">
                          <template #default="scope">
-                            [富文本内容]
+[Rich text content]
                          </template>
                       </el-table-column>
            {{- else if eq .FieldType "file" }}
@@ -168,14 +168,14 @@
         <el-table-column {{- if .Sort}} sortable{{- end}} align="left" label="{{.FieldDesc}}" prop="{{.FieldJson}}" width="120" />
         {{- end }}
         {{- end }}
-        <el-table-column align="left" label="操作" fixed="right" min-width="240">
+        <el-table-column align="left" label="Operation" fixed="right" min-width="240">
             <template #default="scope">
             <el-button type="primary" link class="table-button" @click="getDetails(scope.row)">
                 <el-icon style="margin-right: 5px"><InfoFilled /></el-icon>
-                查看详情
+check the details
             </el-button>
-            <el-button type="primary" link icon="edit" class="table-button" @click="update{{.StructName}}Func(scope.row)">变更</el-button>
-            <el-button type="primary" link icon="delete" @click="deleteRow(scope.row)">删除</el-button>
+<el-button type="primary" link icon="edit" class="table-button" @click="update{{.StructName}}Func(scope.row)">Change</el-button>
+<el-button type="primary" link icon="delete" @click="deleteRow(scope.row)">Delete</el-button>
             </template>
         </el-table-column>
         </el-table>
@@ -194,10 +194,10 @@
     <el-drawer size="800" v-model="dialogFormVisible" :show-close="false" :before-close="closeDialog">
        <template #title>
               <div class="flex justify-between items-center">
-                <span class="text-lg">{{"{{"}}type==='create'?'添加':'修改'{{"}}"}}</span>
+                <span class="text-lg">{{"{{"}}type==='create'?'Add':'Modify'{{"}}"}}</span>
                 <div>
-                  <el-button type="primary" @click="enterDialog">确 定</el-button>
-                  <el-button @click="closeDialog">取 消</el-button>
+<el-button type="primary" @click="enterDialog">Confirm</el-button>
+<el-button @click="closeDialog">Cancel</el-button>
                 </div>
               </div>
             </template>
@@ -206,41 +206,41 @@
         {{- range .Fields}}
             <el-form-item label="{{.FieldDesc}}:"  prop="{{.FieldJson}}" >
           {{- if eq .FieldType "bool" }}
-              <el-switch v-model="formData.{{.FieldJson}}" active-color="#13ce66" inactive-color="#ff4949" active-text="是" inactive-text="否" clearable ></el-switch>
+<el-switch v-model="formData.{{.FieldJson}}" active-color="#13ce66" inactive-color="#ff4949" active-text="Yes" inactive-text="No" clearable > </el-switch>
           {{- end }}
           {{- if eq .FieldType "string" }}
           {{- if .DictType}}
-              <el-select v-model="formData.{{ .FieldJson }}" placeholder="请选择{{.FieldDesc}}" style="width:100%" :clearable="{{.Clearable}}" >
+<el-select v-model="formData.{{ .FieldJson }}" placeholder="Please select {{.FieldDesc}}" style="width:100%" :clearable="{{.Clearable}}" >
                 <el-option v-for="(item,key) in {{ .DictType }}Options" :key="key" :label="item.label" :value="item.value" />
               </el-select>
           {{- else }}
-              <el-input v-model="formData.{{.FieldJson}}" :clearable="{{.Clearable}}"  placeholder="请输入{{.FieldDesc}}" />
+<el-input v-model="formData.{{.FieldJson}}" :clearable="{{.Clearable}}" placeholder="Please enter {{.FieldDesc}}" />
           {{- end }}
           {{- end }}
           {{- if eq .FieldType "richtext" }}
               <RichEdit v-model="formData.{{.FieldJson}}"/>
           {{- end }}
           {{- if eq .FieldType "json" }}
-              // 此字段为json结构，可以前端自行控制展示和数据绑定模式 需绑定json的key为 formData.{{.FieldJson}} 后端会按照json的类型进行存取
+// This field is a json structure. The front end can control the display and data binding mode by itself. The key to bind json is formData.{{.FieldJson}}. The back end will access according to the json type.
               {{"{{"}} formData.{{.FieldJson}} {{"}}"}}
           {{- end }}
           {{- if eq .FieldType "int" }}
           {{- if .DictType}}
-              <el-select v-model="formData.{{ .FieldJson }}" placeholder="请选择{{.FieldDesc}}" style="width:100%" :clearable="{{.Clearable}}" >
+<el-select v-model="formData.{{ .FieldJson }}" placeholder="Please select {{.FieldDesc}}" style="width:100%" :clearable="{{.Clearable}}" >
                 <el-option v-for="(item,key) in {{ .DictType }}Options" :key="key" :label="item.label" :value="item.value" />
               </el-select>
           {{- else }}
-              <el-input v-model.number="formData.{{ .FieldJson }}" :clearable="{{.Clearable}}" placeholder="请输入{{.FieldDesc}}" />
+<el-input v-model.number="formData.{{ .FieldJson }}" :clearable="{{.Clearable}}" placeholder="Please enter {{.FieldDesc}}" />
           {{- end }}
           {{- end }}
           {{- if eq .FieldType "time.Time" }}
-              <el-date-picker v-model="formData.{{ .FieldJson }}" type="date" style="width:100%" placeholder="选择日期" :clearable="{{.Clearable}}"  />
+<el-date-picker v-model="formData.{{ .FieldJson }}" type="date" style="width:100%" placeholder="Select Date" :clearable="{{.Clearable}}" />
           {{- end }}
           {{- if eq .FieldType "float64" }}
               <el-input-number v-model="formData.{{ .FieldJson }}"  style="width:100%" :precision="2" :clearable="{{.Clearable}}"  />
           {{- end }}
           {{- if eq .FieldType "enum" }}
-                <el-select v-model="formData.{{ .FieldJson }}" placeholder="请选择{{.FieldDesc}}" style="width:100%" :clearable="{{.Clearable}}" >
+<el-select v-model="formData.{{ .FieldJson }}" placeholder="Please select {{.FieldDesc}}" style="width:100%" :clearable="{{.Clearable}}" >
                    <el-option v-for="item in [{{.DataTypeLong}}]" :key="item" :label="item" :value="item" />
                 </el-select>
           {{- end }}
@@ -271,10 +271,10 @@
           </el-form>
     </el-drawer>
 
-    <el-drawer size="800" v-model="detailShow" :before-close="closeDetailShow" title="查看详情" destroy-on-close>
+    <el-drawer size="800" v-model="detailShow" :before-close="closeDetailShow" title="View details" destroy-on-close>
           <template #title>
              <div class="flex justify-between items-center">
-               <span class="text-lg">查看详情</span>
+               <span class="text-lg">View details</span>
              </div>
          </template>
         <el-descriptions :column="1" border>
@@ -306,7 +306,7 @@
                    {{- else if eq .FieldType "time.Time" }}
                       {{"{{"}} formatDate(formData.{{.FieldJson}}) {{"}}"}}
                    {{- else if eq .FieldType "richtext" }}
-                        [富文本内容]
+[Rich text content]
                    {{- else if eq .FieldType "json" }}
                         [JSON]
                    {{- else}}
@@ -333,22 +333,22 @@ import {
 import { getUrl } from '@/utils/image'
 {{- end }}
 {{- if .HasPic }}
-// 图片选择组件
+//Image selection component
 import SelectImage from '@/components/selectImage/selectImage.vue'
 {{- end }}
 
 {{- if .HasRichText }}
-// 富文本组件
+//Rich text component
 import RichEdit from '@/components/richtext/rich-edit.vue'
 {{- end }}
 
 
 {{- if .HasFile }}
-// 文件选择组件
+//File selection component
 import SelectFile from '@/components/selectFile/selectFile.vue'
 {{- end }}
 
-// 全量引入格式化工具 请按需保留
+// Fully introduced formatting tools, please keep them as needed
 import { getDictFunc, formatDate, formatBoolean, filterDict, ReturnArrImg, onDownloadFile } from '@/utils/format'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { ref, reactive } from 'vue'
@@ -357,7 +357,7 @@ defineOptions({
     name: '{{.StructName}}'
 })
 
-// 自动化生成的字典（可能为空）以及字段
+//Automatically generated dictionary (may be empty) and fields
     {{- range $index, $element := .DictTypes}}
 const {{ $element }}Options = ref([])
     {{- end }}
@@ -400,7 +400,7 @@ const formData = ref({
         })
 
 
-// 验证规则
+// Validation rules
 const rule = reactive({
     {{- range .Fields }}
             {{- if eq .Require true }}
@@ -412,7 +412,7 @@ const rule = reactive({
                {{- if eq .FieldType "string" }}
                {
                    whitespace: true,
-                   message: '不能只输入空格',
+message: 'Cannot enter only spaces',
                    trigger: ['input', 'blur'],
               }
               {{- end }}
@@ -425,11 +425,11 @@ const searchRule = reactive({
   createdAt: [
     { validator: (rule, value, callback) => {
       if (searchInfo.value.startCreatedAt && !searchInfo.value.endCreatedAt) {
-        callback(new Error('请填写结束日期'))
+callback(new Error('Please fill in the end date'))
       } else if (!searchInfo.value.startCreatedAt && searchInfo.value.endCreatedAt) {
-        callback(new Error('请填写开始日期'))
+callback(new Error('Please fill in the start date'))
       } else if (searchInfo.value.startCreatedAt && searchInfo.value.endCreatedAt && (searchInfo.value.startCreatedAt.getTime() === searchInfo.value.endCreatedAt.getTime() || searchInfo.value.startCreatedAt.getTime() > searchInfo.value.endCreatedAt.getTime())) {
-        callback(new Error('开始日期应当早于结束日期'))
+callback(new Error('Start date should be earlier than end date'))
       } else {
         callback()
       }
@@ -440,11 +440,11 @@ const searchRule = reactive({
       {{- if eq .FieldType "time.Time" }}
         {{.FieldJson }} : [{ validator: (rule, value, callback) => {
         if (searchInfo.value.start{{.FieldName}} && !searchInfo.value.end{{.FieldName}}) {
-          callback(new Error('请填写结束日期'))
+callback(new Error('Please fill in the end date'))
         } else if (!searchInfo.value.start{{.FieldName}} && searchInfo.value.end{{.FieldName}}) {
-          callback(new Error('请填写开始日期'))
+callback(new Error('Please fill in the start date'))
         } else if (searchInfo.value.start{{.FieldName}} && searchInfo.value.end{{.FieldName}} && (searchInfo.value.start{{.FieldName}}.getTime() === searchInfo.value.end{{.FieldName}}.getTime() || searchInfo.value.start{{.FieldName}}.getTime() > searchInfo.value.end{{.FieldName}}.getTime())) {
-          callback(new Error('开始日期应当早于结束日期'))
+callback(new Error('Start date should be earlier than end date'))
         } else {
           callback()
         }
@@ -457,7 +457,7 @@ const searchRule = reactive({
 const elFormRef = ref()
 const elSearchFormRef = ref()
 
-// =========== 表格控制部分 ===========
+// =========== Table control part ===========
 const page = ref(1)
 const total = ref(0)
 const pageSize = ref(10)
@@ -465,7 +465,7 @@ const tableData = ref([])
 const searchInfo = ref({})
 
 {{- if .NeedSort}}
-// 排序
+// sort
 const sortChange = ({ prop, order }) => {
   const sortMap = {
     {{- range .Fields}}
@@ -488,13 +488,13 @@ const sortChange = ({ prop, order }) => {
 }
 {{- end}}
 
-// 重置
+// reset
 const onReset = () => {
   searchInfo.value = {}
   getTableData()
 }
 
-// 搜索
+// search
 const onSubmit = () => {
   elSearchFormRef.value?.validate(async(valid) => {
     if (!valid) return
@@ -508,19 +508,19 @@ const onSubmit = () => {
   })
 }
 
-// 分页
+// paging
 const handleSizeChange = (val) => {
   pageSize.value = val
   getTableData()
 }
 
-// 修改页面容量
+//Modify page capacity
 const handleCurrentChange = (val) => {
   page.value = val
   getTableData()
 }
 
-// 查询
+// Inquire
 const getTableData = async() => {
   const table = await get{{.StructName}}List({ page: page.value, pageSize: pageSize.value, ...searchInfo.value })
   if (table.code === 0) {
@@ -533,49 +533,49 @@ const getTableData = async() => {
 
 getTableData()
 
-// ============== 表格控制部分结束 ===============
+// ============== End of table control part ===============
 
-// 获取需要的字典 可能为空 按需保留
+// Get the required dictionary. It may be empty. Keep it as needed.
 const setOptions = async () =>{
 {{- range $index, $element := .DictTypes }}
     {{ $element }}Options.value = await getDictFunc('{{$element}}')
 {{- end }}
 }
 
-// 获取需要的字典 可能为空 按需保留
+// Get the required dictionary. It may be empty. Keep it as needed.
 setOptions()
 
 
-// 多选数据
+//Multiple selection data
 const multipleSelection = ref([])
-// 多选
+//Multiple selection
 const handleSelectionChange = (val) => {
     multipleSelection.value = val
 }
 
-// 删除行
+// delete row
 const deleteRow = (row) => {
-    ElMessageBox.confirm('确定要删除吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+    ElMessageBox.confirm('Are you sure you want to delete?', 'Prompt', {
+confirmButtonText: 'OK',
+cancelButtonText: 'Cancel',
         type: 'warning'
     }).then(() => {
             delete{{.StructName}}Func(row)
         })
     }
 
-// 多选删除
+//Multiple selection delete
 const onDelete = async() => {
-  ElMessageBox.confirm('确定要删除吗?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+ElMessageBox.confirm('Are you sure you want to delete?', 'Prompt', {
+confirmButtonText: 'OK',
+cancelButtonText: 'Cancel',
     type: 'warning'
   }).then(async() => {
       const {{.PrimaryField.FieldJson}}s = []
       if (multipleSelection.value.length === 0) {
         ElMessage({
           type: 'warning',
-          message: '请选择要删除的数据'
+message: 'Please select the data to be deleted'
         })
         return
       }
@@ -587,7 +587,7 @@ const onDelete = async() => {
       if (res.code === 0) {
         ElMessage({
           type: 'success',
-          message: '删除成功'
+message: 'Delete successfully'
         })
         if (tableData.value.length === {{.PrimaryField.FieldJson}}s.length && page.value > 1) {
           page.value--
@@ -597,10 +597,10 @@ const onDelete = async() => {
       })
     }
 
-// 行为控制标记（弹窗内部需要增还是改）
+// Behavior control tag (does it need to be added or modified inside the pop-up window)
 const type = ref('')
 
-// 更新行
+// update row
 const update{{.StructName}}Func = async(row) => {
     const res = await find{{.StructName}}({ {{.PrimaryField.FieldJson}}: row.{{.PrimaryField.FieldJson}} })
     type.value = 'update'
@@ -611,13 +611,13 @@ const update{{.StructName}}Func = async(row) => {
 }
 
 
-// 删除行
+// delete row
 const delete{{.StructName}}Func = async (row) => {
     const res = await delete{{.StructName}}({ {{.PrimaryField.FieldJson}}: row.{{.PrimaryField.FieldJson}} })
     if (res.code === 0) {
         ElMessage({
                 type: 'success',
-                message: '删除成功'
+message: 'Delete successfully'
             })
             if (tableData.value.length === 1 && page.value > 1) {
             page.value--
@@ -626,23 +626,23 @@ const delete{{.StructName}}Func = async (row) => {
     }
 }
 
-// 弹窗控制标记
+// Pop-up window control tag
 const dialogFormVisible = ref(false)
 
 
-// 查看详情控制标记
+//View details control tag
 const detailShow = ref(false)
 
 
-// 打开详情弹窗
+//Open the details popup window
 const openDetailShow = () => {
   detailShow.value = true
 }
 
 
-// 打开详情
+//Open details
 const getDetails = async (row) => {
-  // 打开弹窗
+//Open the pop-up window
   const res = await find{{.StructName}}({ {{.PrimaryField.FieldJson}}: row.{{.PrimaryField.FieldJson}} })
   if (res.code === 0) {
     formData.value = res.data.re{{.Abbreviation}}
@@ -651,7 +651,7 @@ const getDetails = async (row) => {
 }
 
 
-// 关闭详情弹窗
+// Close the details pop-up window
 const closeDetailShow = () => {
   detailShow.value = false
   formData.value = {
@@ -676,13 +676,13 @@ const closeDetailShow = () => {
 }
 
 
-// 打开弹窗
+//Open the pop-up window
 const openDialog = () => {
     type.value = 'create'
     dialogFormVisible.value = true
 }
 
-// 关闭弹窗
+//Close pop-up window
 const closeDialog = () => {
     dialogFormVisible.value = false
     formData.value = {
@@ -705,7 +705,7 @@ const closeDialog = () => {
         {{- end }}
         }
 }
-// 弹窗确定
+// Pop-up window confirmed
 const enterDialog = async () => {
      elFormRef.value?.validate( async (valid) => {
              if (!valid) return
@@ -724,7 +724,7 @@ const enterDialog = async () => {
               if (res.code === 0) {
                 ElMessage({
                   type: 'success',
-                  message: '创建/更改成功'
+message: 'Creation/change successful'
                 })
                 closeDialog()
                 getTableData()

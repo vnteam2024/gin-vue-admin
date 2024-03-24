@@ -2,9 +2,9 @@
   <div>
     <warning-bar
       href="https://www.bilibili.com/video/BV1kv4y1g7nT?p=3"
-      title="此功能为开发环境使用，不建议发布到生产，具体使用效果请看视频https://www.bilibili.com/video/BV1kv4y1g7nT?p=3"
+title="This function is for development environment use and is not recommended for release to production. Please see the video for specific usage effects https://www.bilibili.com/video/BV1kv4y1g7nT?p=3"
     />
-    <!-- 从数据库直接获取字段 -->
+<!-- Get fields directly from the database -->
     <div class="gva-search-box">
       <el-collapse
         v-model="activeNames"
@@ -13,7 +13,7 @@
         <el-collapse-item name="1">
           <template #title>
             <div class="text-xl pl-4 flex items-center">
-              点这里从现有数据库创建代码
+Click here to create code from an existing database
               <el-icon>
                 <pointer />
               </el-icon>
@@ -27,22 +27,22 @@
             label-width="120px"
           >
             <el-form-item
-              label="业务库"
+label="Business Library"
               prop="selectDBtype"
             >
               <template #label>
                 <el-tooltip
-                  content="注：需要提前到db-list自行配置多数据库，如未配置需配置后重启服务方可使用。（此处可选择对应库表，可理解为从哪个库选择表）"
+content="Note: You need to go to db-list in advance to configure multiple databases by yourself. If not configured, you need to configure and restart the service before using it. (You can select the corresponding database table here, which can be understood as which database to select the table from)"
                   placement="bottom"
                   effect="light"
                 >
-                  <div> 业务库 <el-icon><QuestionFilled /></el-icon> </div>
+<div> Business Library <el-icon><QuestionFilled /></el-icon> </div>
                 </el-tooltip>
               </template>
               <el-select
                 v-model="dbform.businessDB"
                 clearable
-                placeholder="选择业务库"
+placeholder="Select business library"
                 @change="getDbFunc"
               >
                 <el-option
@@ -60,14 +60,14 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="数据库名"
+label="database name"
               prop="structName"
             >
               <el-select
                 v-model="dbform.dbName"
                 clearable
                 filterable
-                placeholder="请选择数据库"
+placeholder="Please select a database"
                 @change="getTableFunc"
               >
                 <el-option
@@ -79,14 +79,14 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="表名"
+label="table name"
               prop="structName"
             >
               <el-select
                 v-model="dbform.tableName"
                 :disabled="!dbform.dbName"
                 filterable
-                placeholder="请选择表"
+placeholder="Please select a table"
               >
                 <el-option
                   v-for="item in tableOptions"
@@ -100,14 +100,14 @@
               <el-button
                 type="primary"
                 @click="getColumnFunc"
-              >使用此表创建</el-button>
+>Create using this table</el-button>
             </el-form-item>
           </el-form>
         </el-collapse-item>
       </el-collapse>
     </div>
     <div class="gva-search-box">
-      <!-- 初始版本自动化代码工具 -->
+<!-- Initial version of automated code tool -->
       <el-form
         ref="autoCodeForm"
         :rules="rules"
@@ -116,12 +116,12 @@
         :inline="true"
       >
         <el-form-item
-          label="Struct名称"
+label="Struct name"
           prop="structName"
         >
           <el-input
             v-model="form.structName"
-            placeholder="首字母自动转换大写"
+placeholder="The first letter is automatically converted to uppercase"
           />
         </el-form-item>
         <el-form-item
@@ -130,7 +130,7 @@
         >
           <el-input
             v-model="form.tableName"
-            placeholder="指定表名（非必填）"
+placeholder="Specify table name (not required)"
           />
         </el-form-item>
         <el-form-item
@@ -138,25 +138,25 @@
         >
           <template #label>
             <el-tooltip
-              content="简称会作为入参对象名和路由group"
+content="The abbreviation will be used as the input parameter object name and routing group"
               placement="bottom"
               effect="light"
             >
-              <div> Struct简称 <el-icon><QuestionFilled /></el-icon> </div>
+<div> Struct abbreviation <el-icon><QuestionFilled /></el-icon> </div>
             </el-tooltip>
           </template>
           <el-input
             v-model="form.abbreviation"
-            placeholder="请输入Struct简称"
+placeholder="Please enter the Struct abbreviation"
           />
         </el-form-item>
         <el-form-item
-          label="Struct中文名称"
+label="Struct Chinese name"
           prop="description"
         >
           <el-input
             v-model="form.description"
-            placeholder="中文描述作为自动api描述"
+placeholder="Chinese description as automatic api description"
           />
         </el-form-item>
         <el-form-item
@@ -164,21 +164,21 @@
         >
           <template #label>
             <el-tooltip
-              content="生成文件的默认名称(建议为驼峰格式,首字母小写,如sysXxxXxxx)"
+content="Default name of the generated file (recommended to be in camel case format, with the first letter lowercase, such as sysXxxXxxx)"
               placement="bottom"
               effect="light"
             >
-              <div> 文件名称 <el-icon><QuestionFilled /></el-icon> </div>
+<div> File name <el-icon><QuestionFilled /></el-icon> </div>
             </el-tooltip>
           </template>
           <el-input
             v-model="form.packageName"
-            placeholder="请输入文件名称"
+placeholder="Please enter file name"
             @blur="toLowerCaseFunc(form,'packageName')"
           />
         </el-form-item>
         <el-form-item
-          label="Package（包）"
+label="Package"
           prop="package"
         >
           <el-select
@@ -201,21 +201,21 @@
           ><document-add /></el-icon>
         </el-form-item>
         <el-form-item
-          label="业务库"
+label="Business Library"
           prop="businessDB"
         >
           <template #label>
             <el-tooltip
-              content="注：需要提前到db-list自行配置多数据库，此项为空则会使用gva本库创建自动化代码(global.GVA_DB),填写后则会创建指定库的代码(global.MustGetGlobalDBByDBName(dbname))"
+content="Note: You need to go to db-list in advance to configure multiple databases by yourself. If this item is empty, the gva library will be used to create the automation code (global.GVA_DB). After filling in, the code of the specified library will be created (global.MustGetGlobalDBByDBName(dbname ))"
               placement="bottom"
               effect="light"
             >
-              <div> 业务库 <el-icon><QuestionFilled /></el-icon> </div>
+<div> Business Library <el-icon><QuestionFilled /></el-icon> </div>
             </el-tooltip>
           </template>
           <el-select
             v-model="form.businessDB"
-            placeholder="选择业务库"
+placeholder="Select business library"
           >
             <el-option
               v-for="item in dbList"
@@ -234,11 +234,11 @@
         <el-form-item>
           <template #label>
             <el-tooltip
-              content="注：会自动在结构体global.Model其中包含主键和软删除相关操作配置"
+              content="Note: The structure global.Model will automatically contain primary key and soft delete related operation configurations"
               placement="bottom"
               effect="light"
             >
-              <div> 使用GVA结构 <el-icon><QuestionFilled /></el-icon> </div>
+              <div> Use GVA structure <el-icon><QuestionFilled /></el-icon> </div>
             </el-tooltip>
           </template>
           <el-checkbox
@@ -249,11 +249,11 @@
         <el-form-item>
           <template #label>
             <el-tooltip
-              content="注：会自动在结构体添加 created_by updated_by deleted_by，方便用户进行资源权限控制"
+content="Note: created_by updated_by deleted_by will be automatically added to the structure to facilitate users to control resource permissions"
               placement="bottom"
               effect="light"
             >
-              <div> 创建资源标识 <el-icon><QuestionFilled /></el-icon> </div>
+<div> Create resource identifier <el-icon><QuestionFilled /></el-icon> </div>
             </el-tooltip>
           </template>
           <el-checkbox v-model="form.autoCreateResource" />
@@ -261,11 +261,11 @@
         <el-form-item>
           <template #label>
             <el-tooltip
-              content="注：把自动生成的API注册进数据库"
+content="Note: Register the automatically generated API into the database"
               placement="bottom"
               effect="light"
             >
-              <div> 自动创建API </div>
+<div> Automatically create API </div>
             </el-tooltip>
           </template>
           <el-checkbox v-model="form.autoCreateApiToSql" />
@@ -273,37 +273,37 @@
         <el-form-item>
           <template #label>
             <el-tooltip
-              content="注：自动迁移生成的文件到yaml配置的对应位置"
+content="Note: Automatically migrate the generated files to the corresponding location of the yaml configuration"
               placement="bottom"
               effect="light"
             >
-              <div> 自动移动文件 </div>
+<div> Automatically move files </div>
             </el-tooltip>
           </template>
           <el-checkbox v-model="form.autoMoveFile" />
         </el-form-item>
       </el-form>
     </div>
-    <!-- 组件列表 -->
+<!-- Component list -->
     <div class="gva-table-box">
       <div class="gva-btn-list">
         <el-button
           type="primary"
           @click="editAndAddField()"
-        >新增字段</el-button>
+>Add new field</el-button>
       </div>
       <el-table :data="form.fields">
         <el-table-column
           align="left"
           type="index"
-          label="序列"
+label="sequence"
           width="60"
         />
 
         <el-table-column
           align="left"
           type="index"
-          label="主键"
+          label="primary key"
           width="60"
         >
           <template #default="{row}">
@@ -313,7 +313,7 @@
         <el-table-column
           align="left"
           prop="fieldName"
-          label="字段名称"
+label="field name"
           width="160"
         >
           <template #default="{row}">
@@ -323,7 +323,7 @@
         <el-table-column
           align="left"
           prop="fieldDesc"
-          label="中文名"
+label="Chinese name"
           width="160"
         >
           <template #default="{row}">
@@ -333,14 +333,14 @@
         <el-table-column
           align="left"
           prop="require"
-          label="必填"
+label="required"
         >
           <template #default="{row}"> <el-checkbox v-model="row.require" /></template>
         </el-table-column>
         <el-table-column
           align="left"
           prop="sort"
-          label="排序"
+label="Sort"
         >
           <template #default="{row}"> <el-checkbox v-model="row.sort" /> </template>
         </el-table-column>
@@ -348,7 +348,7 @@
           align="left"
           prop="fieldJson"
           width="160px"
-          label="字段Json"
+label="Field Json"
         >
           <template #default="{row}">
             <el-input v-model="row.fieldJson" />
@@ -357,14 +357,14 @@
         <el-table-column
           align="left"
           prop="fieldType"
-          label="字段类型"
+label="field type"
           width="160"
         >
           <template #default="{row}">
             <el-select
               v-model="row.fieldType"
               style="width:100%"
-              placeholder="请选择字段类型"
+placeholder="Please select field type"
               clearable
             >
               <el-option
@@ -379,7 +379,7 @@
         <el-table-column
           align="left"
           prop="dataTypeLong"
-          label="数据库字段长度"
+label="Database field length"
           width="160"
         >
           <template #default="{row}">
@@ -389,7 +389,7 @@
         <el-table-column
           align="left"
           prop="columnName"
-          label="数据库字段"
+label="database field"
           width="160"
         >
           <template #default="{row}">
@@ -399,7 +399,7 @@
         <el-table-column
           align="left"
           prop="comment"
-          label="数据库字段描述"
+label="Database field description"
           width="160"
         >
           <template #default="{row}">
@@ -409,14 +409,14 @@
         <el-table-column
           align="left"
           prop="fieldSearchType"
-          label="搜索条件"
+label="Search criteria"
           width="130"
         >
           <template #default="{row}">
             <el-select
               v-model="row.fieldSearchType"
               style="width:100%"
-              placeholder="请选择字段查询条件"
+placeholder="Please select field query conditions"
               clearable
               :disabled="row.fieldType!=='json'"
             >
@@ -436,7 +436,7 @@
         </el-table-column>
         <el-table-column
           align="left"
-          label="操作"
+label="operation"
           width="300"
           fixed="right"
         >
@@ -447,47 +447,47 @@
               link
               icon="edit"
               @click="editAndAddField(scope.row)"
-            >高级编辑</el-button>
+>Advanced Editor</el-button>
             <el-button
 
               type="primary"
               link
               :disabled="scope.$index === 0"
               @click="moveUpField(scope.$index)"
-            >上移</el-button>
+>Move up</el-button>
             <el-button
 
               type="primary"
               link
               :disabled="(scope.$index + 1) === form.fields.length"
               @click="moveDownField(scope.$index)"
-            >下移</el-button>
+>Move down</el-button>
             <el-button
               type="primary"
               link
               icon="delete"
               @click="deleteField(scope.$index)"
-            >删除</el-button>
+>Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <!-- 组件列表 -->
+<!-- Component list -->
       <div class="gva-btn-list justify-end mt-4">
         <el-button
           type="primary"
           @click="enterForm(true)"
-        >预览代码</el-button>
+>Preview code</el-button>
         <el-button
           type="primary"
           @click="enterForm(false)"
-        >生成代码</el-button>
+>Generate code</el-button>
       </div>
     </div>
-    <!-- 组件弹窗 -->
+<!-- Component pop-up window -->
     <el-dialog
       v-model="dialogFlag"
       width="70%"
-      title="组件内容"
+title="Component content"
     >
       <FieldDialog
         v-if="dialogFlag"
@@ -498,11 +498,11 @@
       />
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="closeDialog">取 消</el-button>
+<el-button @click="closeDialog">Cancel</el-button>
           <el-button
             type="primary"
             @click="enterDialog"
-          >确 定</el-button>
+>Confirm</el-button>
         </div>
       </template>
     </el-dialog>
@@ -510,15 +510,15 @@
     <el-dialog v-model="previewFlag">
       <template #header>
         <div class="flex items-center py-1.5">
-          <p>操作栏：</p>
+<p>Action bar:</p>
           <el-button
             type="primary"
             @click="selectText"
-          >全选</el-button>
+>Select all</el-button>
           <el-button
             type="primary"
             @click="copy"
-          >复制</el-button>
+>Copy</el-button>
         </div>
       </template>
       <PreviewCodeDialog
@@ -534,7 +534,7 @@
           <el-button
             type="primary"
             @click="previewFlag = false"
-          >确 定</el-button>
+>Confirm</el-button>
         </div>
       </template>
     </el-dialog>
@@ -560,47 +560,47 @@ const gormModelList = ['id', 'created_at', 'updated_at', 'deleted_at']
 
 const typeOptions = ref([
   {
-    label: '字符串',
+label: 'string',
     value: 'string'
   },
   {
-    label: '富文本',
+label: 'rich text',
     value: 'richtext'
   },
   {
-    label: '整型',
+label: 'integer',
     value: 'int'
   },
   {
-    label: '布尔值',
+label: 'boolean',
     value: 'bool'
   },
   {
-    label: '浮点型',
+label: 'floating point',
     value: 'float64'
   },
   {
-    label: '时间',
+label: 'time',
     value: 'time.Time'
   },
   {
-    label: '枚举',
+label: 'enumeration',
     value: 'enum'
   },
   {
-    label: '单图片（字符串）',
+label: 'Single picture (string)',
     value: 'picture',
   },
   {
-    label: '多图片（json字符串）',
+label: 'Multiple pictures (json string)',
     value: 'pictures',
   },
   {
-    label: '视频（字符串）',
+label: 'Video (string)',
     value: 'video',
   },
   {
-    label: '文件（json字符串）',
+label: 'File (json string)',
     value: 'file',
   },
   {
@@ -685,23 +685,23 @@ const form = ref({
 })
 const rules = ref({
   structName: [
-    { required: true, message: '请输入结构体名称', trigger: 'blur' }
+{ required: true, message: 'Please enter the structure name', trigger: 'blur' }
   ],
   abbreviation: [
-    { required: true, message: '请输入结构体简称', trigger: 'blur' }
+{ required: true, message: 'Please enter the structure abbreviation', trigger: 'blur' }
   ],
   description: [
-    { required: true, message: '请输入结构体描述', trigger: 'blur' }
+{ required: true, message: 'Please enter a structure description', trigger: 'blur' }
   ],
   packageName: [
     {
       required: true,
-      message: '文件名称：sysXxxxXxxx',
+message: 'File name: sysXxxxXxxx',
       trigger: 'blur'
     }
   ],
   package: [
-    { required: true, message: '请选择package', trigger: 'blur' }
+{ required: true, message: 'Please select package', trigger: 'blur' }
   ]
 })
 const dialogMiddle = ref({})
@@ -712,11 +712,11 @@ const previewFlag = ref(false)
 const useGva = (e) => {
   if (e && form.value.fields.length) {
     ElMessageBox.confirm(
-      '如果您开启GVA默认结构，会自动添加ID,CreatedAt,UpdatedAt,DeletedAt字段，此行为将自动清除您目前在下方创建的重名字段，是否继续？',
-      '注意',
+      'If you turn on the GVA default structure, the ID, CreatedAt, UpdatedAt, and DeletedAt fields will be automatically added. This behavior will automatically clear the fields with the same names you have created below. Do you want to continue? ',
+      'Notice',
       {
-        confirmButtonText: '继续',
-        cancelButtonText: '取消',
+        confirmButtonText: 'Continue',
+cancelButtonText: 'Cancel',
         type: 'warning',
       }
     )
@@ -791,9 +791,9 @@ const closeDialog = () => {
   dialogFlag.value = false
 }
 const deleteField = (index) => {
-  ElMessageBox.confirm('确定要删除吗?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+ElMessageBox.confirm('Are you sure you want to delete?', 'Prompt', {
+confirmButtonText: 'OK',
+cancelButtonText: 'Cancel',
     type: 'warning'
   }).then(async() => {
     form.value.fields.splice(index, 1)
@@ -804,7 +804,7 @@ const enterForm = async(isPreview) => {
   if (form.value.fields.length <= 0) {
     ElMessage({
       type: 'error',
-      message: '请填写至少一个field'
+message: 'Please fill in at least one field'
     })
     return false
   }
@@ -812,7 +812,7 @@ const enterForm = async(isPreview) => {
   if (!form.value.gvaModel && form.value.fields.every(item => !item.primaryKey)) {
     ElMessage({
       type: 'error',
-      message: '您至少需要创建一个主键才能保证自动化代码的可行性'
+      message: 'You need to create at least one primary key to ensure the feasibility of the automation code'
     })
     return false
   }
@@ -822,7 +822,7 @@ const enterForm = async(isPreview) => {
   ) {
     ElMessage({
       type: 'error',
-      message: '存在与结构体同名的字段'
+message: 'There is a field with the same name as the structure'
     })
     return false
   }
@@ -830,7 +830,7 @@ const enterForm = async(isPreview) => {
   if (form.value.package === form.value.abbreviation) {
     ElMessage({
       type: 'error',
-      message: 'package和结构体简称不可同名'
+message: 'Package and structure abbreviations cannot have the same name'
     })
     return false
   }
@@ -850,7 +850,7 @@ const enterForm = async(isPreview) => {
       if (form.value.structName === form.value.abbreviation) {
         ElMessage({
           type: 'error',
-          message: 'structName和struct简称不能相同'
+message: 'structName and struct abbreviation cannot be the same'
         })
         return false
       }
@@ -867,18 +867,18 @@ const enterForm = async(isPreview) => {
         if (form.value.autoMoveFile) {
           ElMessage({
             type: 'success',
-            message: '自动化代码创建成功，自动移动成功'
+message: 'Automation code created successfully, automatic move successful'
           })
           return
         }
         ElMessage({
           type: 'success',
-          message: '自动化代码创建成功，正在下载'
+message: 'Automation code created successfully and downloading'
         })
         const blob = new Blob([data])
         const fileName = 'ginvueadmin.zip'
         if ('download' in document.createElement('a')) {
-          // 不是IE浏览器
+// Not IE browser
           const url = window.URL.createObjectURL(blob)
           const link = document.createElement('a')
           link.style.display = 'none'
@@ -886,8 +886,8 @@ const enterForm = async(isPreview) => {
           link.setAttribute('download', fileName)
           document.body.appendChild(link)
           link.click()
-          document.body.removeChild(link) // 下载完成移除元素
-          window.URL.revokeObjectURL(url) // 释放掉blob对象
+document.body.removeChild(link) // Remove element after download is complete
+window.URL.revokeObjectURL(url) // Release the blob object
         } else {
           // IE 10+
           window.navigator.msSaveBlob(blob, fileName)
@@ -933,7 +933,7 @@ const getColumnFunc = async() => {
     form.value.tableName = dbform.value.tableName
     form.value.packageName = tbHump
     form.value.abbreviation = tbHump
-    form.value.description = tbHump + '表'
+form.value.description = tbHump + 'table'
     form.value.autoCreateApiToSql = true
     form.value.autoMoveFile = true
     form.value.fields = []
@@ -943,7 +943,7 @@ const getColumnFunc = async() => {
               const fbHump = toHump(item.columnName)
               form.value.fields.push({
                 fieldName: toUpperCase(fbHump),
-                fieldDesc: item.columnComment || fbHump + '字段',
+fieldDesc: item.columnComment || fbHump + 'field',
                 fieldType: fdMap.value[item.dataType],
                 dataType: item.dataType,
                 fieldJson: fbHump,

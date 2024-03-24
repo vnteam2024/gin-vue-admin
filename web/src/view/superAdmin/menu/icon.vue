@@ -4,7 +4,7 @@
       v-model="metaData.icon"
       clearable
       filterable
-      placeholder="请选择"
+placeholder="Please select"
     >
       <template #prefix>
         <el-icon>
@@ -1176,7 +1176,7 @@ const options = reactive([
 const metaData = ref(props.meta)
 if (!metaData.value.icon) {
   // metaData.value.icon = options[0].label
-  // 传参无icon则显示空即可，否则默认会加一个aim的icon
+  // If there is no icon in the passed parameter, it will be displayed as empty, otherwise an aim icon will be added by default.
   metaData.value.icon = ''
 }
 

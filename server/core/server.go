@@ -14,7 +14,7 @@ type server interface {
 
 func RunWindowsServer() {
 	if global.GVA_CONFIG.System.UseMultipoint || global.GVA_CONFIG.System.UseRedis {
-		// 初始化redis服务
+//Initialize redis service
 		initialize.Redis()
 	}
 	if global.GVA_CONFIG.System.UseMongo {
@@ -23,7 +23,7 @@ func RunWindowsServer() {
 			zap.L().Error(fmt.Sprintf("%+v", err))
 		}
 	}
-	// 从db加载jwt数据
+//Load jwt data from db
 	if global.GVA_DB != nil {
 		system.LoadAll()
 	}
@@ -37,14 +37,14 @@ func RunWindowsServer() {
 	global.GVA_LOG.Info("server run success on ", zap.String("address", address))
 
 	fmt.Printf(`
-	欢迎使用 gin-vue-admin
-	当前版本:v2.6.1
-    加群方式:微信号：shouzi_1994 QQ群：622360840
-	插件市场:https://plugin.gin-vue-admin.com
-	GVA讨论社区:https://support.qq.com/products/371961
-	默认自动化文档地址:http://127.0.0.1%s/swagger/index.html
-	默认前端文件运行地址:http://127.0.0.1:8080
-	如果项目让您获得了收益，希望您能请团队喝杯可乐:https://www.gin-vue-admin.com/coffee/index.html
+Welcome to gin-vue-admin
+	Current version: v2.6.1
+How to join the group: WeChat ID: shouzi_1994 QQ group: 622360840
+Plug-in market: https://plugin.gin-vue-admin.com
+GVA discussion community: https://support.qq.com/products/371961
+Default automation document address: http://127.0.0.1%s/swagger/index.html
+Default front-end file running address: http://127.0.0.1:8080
+If the project has made you gain, I hope you can treat the team to a cup of Coke: https://www.gin-vue-admin.com/coffee/index.html
 `, address)
 	global.GVA_LOG.Error(s.ListenAndServe().Error())
 }

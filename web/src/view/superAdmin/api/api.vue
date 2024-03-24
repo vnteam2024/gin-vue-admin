@@ -6,29 +6,29 @@
         :inline="true"
         :model="searchInfo"
       >
-        <el-form-item label="路径">
+<el-form-item label="path">
           <el-input
             v-model="searchInfo.path"
-            placeholder="路径"
+placeholder="path"
           />
         </el-form-item>
-        <el-form-item label="描述">
+<el-form-item label="description">
           <el-input
             v-model="searchInfo.description"
-            placeholder="描述"
+placeholder="description"
           />
         </el-form-item>
-        <el-form-item label="API组">
+<el-form-item label="API group">
           <el-input
             v-model="searchInfo.apiGroup"
-            placeholder="api组"
+placeholder="api group"
           />
         </el-form-item>
-        <el-form-item label="请求">
+<el-form-item label="Request">
           <el-select
             v-model="searchInfo.method"
             clearable
-            placeholder="请选择"
+placeholder="Please select"
           >
             <el-option
               v-for="item in methodOptions"
@@ -43,11 +43,11 @@
             type="primary"
             icon="search"
             @click="onSubmit"
-          >查询</el-button>
+>Query</el-button>
           <el-button
             icon="refresh"
             @click="onReset"
-          >重置</el-button>
+>Reset</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -57,7 +57,7 @@
           type="primary"
           icon="plus"
           @click="openDialog('addApi')"
-        >新增</el-button>
+>Add</el-button>
         <el-icon
           class="cursor-pointer"
           @click="toDoc('https://www.bilibili.com/video/BV1kv4y1g7nT?p=7&vd_source=f2640257c21e3b547a790461ed94875e')"
@@ -66,11 +66,11 @@
           icon="delete"
           :disabled="!apis.length"
           @click="onDelete"
-        >删除</el-button>
+>Delete</el-button>
         <el-button
           icon="Refresh"
           @click="onFresh"
-        >刷新缓存</el-button>
+>Refresh cache</el-button>
       </div>
       <el-table
         :data="tableData"
@@ -90,28 +90,28 @@
         />
         <el-table-column
           align="left"
-          label="API路径"
+label="API path"
           min-width="150"
           prop="path"
           sortable="custom"
         />
         <el-table-column
           align="left"
-          label="API分组"
+label="API group"
           min-width="150"
           prop="apiGroup"
           sortable="custom"
         />
         <el-table-column
           align="left"
-          label="API简介"
+label="API introduction"
           min-width="150"
           prop="description"
           sortable="custom"
         />
         <el-table-column
           align="left"
-          label="请求"
+label="Request"
           min-width="150"
           prop="method"
           sortable="custom"
@@ -126,7 +126,7 @@
         <el-table-column
           align="left"
           fixed="right"
-          label="操作"
+label="operation"
           width="200"
         >
           <template #default="scope">
@@ -136,14 +136,14 @@
               type="primary"
               link
               @click="editApiFunc(scope.row)"
-            >编辑</el-button>
+>Edit</el-button>
             <el-button
               icon="delete"
 
               type="primary"
               link
               @click="deleteApiFunc(scope.row)"
-            >删除</el-button>
+>Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -166,7 +166,7 @@
       :before-close="closeDialog"
       :title="dialogTitle"
     >
-      <warning-bar title="新增API，需要在角色管理内配置权限才可使用" />
+<warning-bar title="New API, you need to configure permissions in role management before you can use it" />
       <el-form
         ref="apiForm"
         :model="form"
@@ -174,7 +174,7 @@
         label-width="80px"
       >
         <el-form-item
-          label="路径"
+label="path"
           prop="path"
         >
           <el-input
@@ -183,12 +183,12 @@
           />
         </el-form-item>
         <el-form-item
-          label="请求"
+label="Request"
           prop="method"
         >
           <el-select
             v-model="form.method"
-            placeholder="请选择"
+placeholder="Please select"
             style="width:100%"
           >
             <el-option
@@ -200,7 +200,7 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          label="api分组"
+label="api group"
           prop="apiGroup"
         >
           <el-input
@@ -209,7 +209,7 @@
           />
         </el-form-item>
         <el-form-item
-          label="api简介"
+label="api introduction"
           prop="description"
         >
           <el-input
@@ -220,11 +220,11 @@
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="closeDialog">取 消</el-button>
+<el-button @click="closeDialog">Cancel</el-button>
           <el-button
             type="primary"
             @click="enterDialog"
-          >确 定</el-button>
+>Confirm</el-button>
         </div>
       </template>
     </el-dialog>
@@ -267,37 +267,37 @@ const form = ref({
 const methodOptions = ref([
   {
     value: 'POST',
-    label: '创建',
+label: 'Create',
     type: 'success'
   },
   {
     value: 'GET',
-    label: '查看',
+label: 'View',
     type: ''
   },
   {
     value: 'PUT',
-    label: '更新',
+label: 'update',
     type: 'warning'
   },
   {
     value: 'DELETE',
-    label: '删除',
+label: 'delete',
     type: 'danger'
   }
 ])
 
 const type = ref('')
 const rules = ref({
-  path: [{ required: true, message: '请输入api路径', trigger: 'blur' }],
+path: [{ required: true, message: 'Please enter the api path', trigger: 'blur' }],
   apiGroup: [
-    { required: true, message: '请输入组名称', trigger: 'blur' }
+{ required: true, message: 'Please enter the group name', trigger: 'blur' }
   ],
   method: [
-    { required: true, message: '请选择请求方式', trigger: 'blur' }
+{ required: true, message: 'Please select the request method', trigger: 'blur' }
   ],
   description: [
-    { required: true, message: '请输入api介绍', trigger: 'blur' }
+{ required: true, message: 'Please enter api introduction', trigger: 'blur' }
   ]
 })
 
@@ -310,7 +310,7 @@ const searchInfo = ref({})
 const onReset = () => {
   searchInfo.value = {}
 }
-// 搜索
+// search
 
 const onSubmit = () => {
   page.value = 1
@@ -318,7 +318,7 @@ const onSubmit = () => {
   getTableData()
 }
 
-// 分页
+// paging
 const handleSizeChange = (val) => {
   pageSize.value = val
   getTableData()
@@ -329,7 +329,7 @@ const handleCurrentChange = (val) => {
   getTableData()
 }
 
-// 排序
+// sort
 const sortChange = ({ prop, order }) => {
   if (prop) {
     if (prop === 'ID') {
@@ -341,7 +341,7 @@ const sortChange = ({ prop, order }) => {
   getTableData()
 }
 
-// 查询
+// Inquire
 const getTableData = async() => {
   const table = await getApiList({ page: page.value, pageSize: pageSize.value, ...searchInfo.value })
   if (table.code === 0) {
@@ -354,15 +354,15 @@ const getTableData = async() => {
 
 getTableData()
 
-// 批量操作
+// batch operation
 const handleSelectionChange = (val) => {
   apis.value = val
 }
 
 const onDelete = async() => {
-  ElMessageBox.confirm('确定要删除吗?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+ElMessageBox.confirm('Are you sure you want to delete?', 'Prompt', {
+confirmButtonText: 'OK',
+cancelButtonText: 'Cancel',
     type: 'warning'
   }).then(async() => {
     const ids = apis.value.map(item => item.ID)
@@ -380,9 +380,9 @@ const onDelete = async() => {
   })
 }
 const onFresh = async() => {
-  ElMessageBox.confirm('确定要刷新缓存吗?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+  ElMessageBox.confirm('Are you sure you want to refresh the cache?', 'Prompt', {
+confirmButtonText: 'OK',
+cancelButtonText: 'Cancel',
     type: 'warning'
   }).then(async() => {
     const res = await freshCasbin()
@@ -395,7 +395,7 @@ const onFresh = async() => {
   })
 }
 
-// 弹窗相关
+// Pop-up window related
 const apiForm = ref(null)
 const initForm = () => {
   apiForm.value.resetFields()
@@ -407,15 +407,15 @@ const initForm = () => {
   }
 }
 
-const dialogTitle = ref('新增Api')
+const dialogTitle = ref('New Api')
 const dialogFormVisible = ref(false)
 const openDialog = (key) => {
   switch (key) {
     case 'addApi':
-      dialogTitle.value = '新增Api'
+dialogTitle.value = 'New Api'
       break
     case 'edit':
-      dialogTitle.value = '编辑Api'
+dialogTitle.value = 'EditApi'
       break
     default:
       break
@@ -444,7 +444,7 @@ const enterDialog = async() => {
             if (res.code === 0) {
               ElMessage({
                 type: 'success',
-                message: '添加成功',
+message: 'Added successfully',
                 showClose: true
               })
             }
@@ -459,7 +459,7 @@ const enterDialog = async() => {
             if (res.code === 0) {
               ElMessage({
                 type: 'success',
-                message: '编辑成功',
+message: 'Edit successfully',
                 showClose: true
               })
             }
@@ -472,7 +472,7 @@ const enterDialog = async() => {
           {
             ElMessage({
               type: 'error',
-              message: '未知操作',
+message: 'Unknown operation',
               showClose: true
             })
           }
@@ -483,9 +483,9 @@ const enterDialog = async() => {
 }
 
 const deleteApiFunc = async(row) => {
-  ElMessageBox.confirm('此操作将永久删除所有角色下该api, 是否继续?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+  ElMessageBox.confirm('This operation will permanently delete this API under all roles, do you want to continue?', 'Prompt', {
+confirmButtonText: 'OK',
+cancelButtonText: 'Cancel',
     type: 'warning'
   })
     .then(async() => {
@@ -493,7 +493,7 @@ const deleteApiFunc = async(row) => {
       if (res.code === 0) {
         ElMessage({
           type: 'success',
-          message: '删除成功!'
+message: 'Delete successfully!'
         })
         if (tableData.value.length === 1 && page.value > 1) {
           page.value--

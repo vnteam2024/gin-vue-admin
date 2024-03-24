@@ -8,7 +8,7 @@ import (
 
 //@author: [piexlmax](https://github.com/piexlmax)
 //@function: CreateSysDictionaryDetail
-//@description: 创建字典详情数据
+//@description: Create dictionary details data
 //@param: sysDictionaryDetail model.SysDictionaryDetail
 //@return: err error
 
@@ -21,7 +21,7 @@ func (dictionaryDetailService *DictionaryDetailService) CreateSysDictionaryDetai
 
 //@author: [piexlmax](https://github.com/piexlmax)
 //@function: DeleteSysDictionaryDetail
-//@description: 删除字典详情数据
+//@description: Delete dictionary details data
 //@param: sysDictionaryDetail model.SysDictionaryDetail
 //@return: err error
 
@@ -32,7 +32,7 @@ func (dictionaryDetailService *DictionaryDetailService) DeleteSysDictionaryDetai
 
 //@author: [piexlmax](https://github.com/piexlmax)
 //@function: UpdateSysDictionaryDetail
-//@description: 更新字典详情数据
+//@description: Update dictionary details data
 //@param: sysDictionaryDetail *model.SysDictionaryDetail
 //@return: err error
 
@@ -43,7 +43,7 @@ func (dictionaryDetailService *DictionaryDetailService) UpdateSysDictionaryDetai
 
 //@author: [piexlmax](https://github.com/piexlmax)
 //@function: GetSysDictionaryDetail
-//@description: 根据id获取字典详情单条数据
+//@description: Get a single piece of dictionary details based on id
 //@param: id uint
 //@return: sysDictionaryDetail system.SysDictionaryDetail, err error
 
@@ -54,17 +54,17 @@ func (dictionaryDetailService *DictionaryDetailService) GetSysDictionaryDetail(i
 
 //@author: [piexlmax](https://github.com/piexlmax)
 //@function: GetSysDictionaryDetailInfoList
-//@description: 分页获取字典详情列表
+//@description: Get the dictionary details list in pages
 //@param: info request.SysDictionaryDetailSearch
 //@return: list interface{}, total int64, err error
 
 func (dictionaryDetailService *DictionaryDetailService) GetSysDictionaryDetailInfoList(info request.SysDictionaryDetailSearch) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
-	// 创建db
+//Create db
 	db := global.GVA_DB.Model(&system.SysDictionaryDetail{})
 	var sysDictionaryDetails []system.SysDictionaryDetail
-	// 如果有条件搜索 下方会自动创建搜索语句
+// If there is a conditional search, the search statement will be automatically created below
 	if info.Label != "" {
 		db = db.Where("label LIKE ?", "%"+info.Label+"%")
 	}
@@ -85,14 +85,14 @@ func (dictionaryDetailService *DictionaryDetailService) GetSysDictionaryDetailIn
 	return sysDictionaryDetails, total, err
 }
 
-// 按照字典id获取字典全部内容的方法
+// Method to get all the contents of the dictionary according to the dictionary id
 func (dictionaryDetailService *DictionaryDetailService) GetDictionaryList(dictionaryID uint) (list []system.SysDictionaryDetail, err error) {
 	var sysDictionaryDetails []system.SysDictionaryDetail
 	err = global.GVA_DB.Find(&sysDictionaryDetails, "sys_dictionary_id = ?", dictionaryID).Error
 	return sysDictionaryDetails, err
 }
 
-// 按照字典type获取字典全部内容的方法
+// Method to obtain all contents of dictionary according to dictionary type
 func (dictionaryDetailService *DictionaryDetailService) GetDictionaryListByType(t string) (list []system.SysDictionaryDetail, err error) {
 	var sysDictionaryDetails []system.SysDictionaryDetail
 	db := global.GVA_DB.Model(&system.SysDictionaryDetail{}).Joins("JOIN sys_dictionaries ON sys_dictionaries.id = sys_dictionary_details.sys_dictionary_id")
@@ -100,14 +100,14 @@ func (dictionaryDetailService *DictionaryDetailService) GetDictionaryListByType(
 	return sysDictionaryDetails, err
 }
 
-// 按照字典id+字典内容value获取单条字典内容
+// Get a single dictionary content according to dictionary id + dictionary content value
 func (dictionaryDetailService *DictionaryDetailService) GetDictionaryInfoByValue(dictionaryID uint, value uint) (detail system.SysDictionaryDetail, err error) {
 	var sysDictionaryDetail system.SysDictionaryDetail
 	err = global.GVA_DB.First(&sysDictionaryDetail, "sys_dictionary_id = ? and value = ?", dictionaryID, value).Error
 	return sysDictionaryDetail, err
 }
 
-// 按照字典type+字典内容value获取单条字典内容
+// Get a single dictionary content according to dictionary type + dictionary content value
 func (dictionaryDetailService *DictionaryDetailService) GetDictionaryInfoByTypeValue(t string, value uint) (detail system.SysDictionaryDetail, err error) {
 	var sysDictionaryDetails system.SysDictionaryDetail
 	db := global.GVA_DB.Model(&system.SysDictionaryDetail{}).Joins("JOIN sys_dictionaries ON sys_dictionaries.id = sys_dictionary_details.sys_dictionary_id")

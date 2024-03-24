@@ -6,13 +6,13 @@ import (
 )
 
 func GetJSONKeys(jsonStr string) (keys []string, err error) {
-	// 使用json.Decoder，以便在解析过程中记录键的顺序
+	// Use json.Decoder to record the order of keys during parsing
 	dec := json.NewDecoder(strings.NewReader(jsonStr))
 	t, err := dec.Token()
 	if err != nil {
 		return nil, err
 	}
-	// 确保数据是一个对象
+	// Make sure the data is an object
 	if t != json.Delim('{') {
 		return nil, err
 	}
@@ -23,7 +23,7 @@ func GetJSONKeys(jsonStr string) (keys []string, err error) {
 		}
 		keys = append(keys, t.(string))
 
-		// 解析值
+		// parse value
 		var value interface{}
 		err = dec.Decode(&value)
 		if err != nil {

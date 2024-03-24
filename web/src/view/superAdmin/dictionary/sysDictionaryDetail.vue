@@ -2,12 +2,12 @@
   <div>
     <div class="gva-table-box">
       <div class="gva-btn-list justify-between">
-        <span class="text font-bold">字典详细内容</span>
+<span class="text font-bold">Dictionary details</span>
         <el-button
           type="primary"
           icon="plus"
           @click="openDialog"
-        >新增字典项</el-button>
+>Add dictionary item</el-button>
       </div>
       <el-table
         ref="multipleTable"
@@ -22,7 +22,7 @@
         />
         <el-table-column
           align="left"
-          label="日期"
+label="date"
           width="180"
         >
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
@@ -30,25 +30,25 @@
 
         <el-table-column
           align="left"
-          label="展示值"
+label="display value"
           prop="label"
         />
 
         <el-table-column
           align="left"
-          label="字典值"
+label="dictionary value"
           prop="value"
         />
 
         <el-table-column
           align="left"
-          label="扩展值"
+label="extended value"
           prop="extend"
         />
 
         <el-table-column
           align="left"
-          label="启用状态"
+label="enabled status"
           prop="status"
           width="120"
         >
@@ -57,14 +57,14 @@
 
         <el-table-column
           align="left"
-          label="排序标记"
+label="sort mark"
           prop="sort"
           width="120"
         />
 
         <el-table-column
           align="left"
-          label="操作"
+label="operation"
           width="180"
         >
           <template #default="scope">
@@ -73,13 +73,13 @@
               link
               icon="edit"
               @click="updateSysDictionaryDetailFunc(scope.row)"
-            >变更</el-button>
+>Change</el-button>
             <el-button
               type="primary"
               link
               icon="delete"
               @click="deleteSysDictionaryDetailFunc(scope.row)"
-            >删除</el-button>
+>Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -100,7 +100,7 @@
     <el-dialog
       v-model="dialogFormVisible"
       :before-close="closeDialog"
-      :title="type==='create'?'添加字典项':'修改字典项'"
+:title="type==='create'?'Add dictionary item':'Modify dictionary item'"
     >
       <el-form
         ref="dialogForm"
@@ -109,66 +109,66 @@
         label-width="110px"
       >
         <el-form-item
-          label="展示值"
+label="display value"
           prop="label"
         >
           <el-input
             v-model="formData.label"
-            placeholder="请输入展示值"
+placeholder="Please enter display value"
             clearable
             :style="{width: '100%'}"
           />
         </el-form-item>
         <el-form-item
-          label="字典值"
+label="dictionary value"
           prop="value"
         >
           <el-input
             v-model="formData.value"
-            placeholder="请输入字典值"
+placeholder="Please enter dictionary value"
             clearable
             :style="{width: '100%'}"
           />
         </el-form-item>
         <el-form-item
-          label="扩展值"
+label="extended value"
           prop="extend"
         >
           <el-input
             v-model="formData.extend"
-            placeholder="请输入扩展值"
+placeholder="Please enter extended value"
             clearable
             :style="{width: '100%'}"
           />
         </el-form-item>
         <el-form-item
-          label="启用状态"
+label="enabled status"
           prop="status"
           required
         >
           <el-switch
             v-model="formData.status"
-            active-text="开启"
-            inactive-text="停用"
+active-text="Open"
+inactive-text="Inactive"
           />
         </el-form-item>
         <el-form-item
-          label="排序标记"
+label="sort mark"
           prop="sort"
         >
           <el-input-number
             v-model.number="formData.sort"
-            placeholder="排序标记"
+placeholder="sort mark"
           />
         </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="closeDialog">取 消</el-button>
+<el-button @click="closeDialog">Cancel</el-button>
           <el-button
             type="primary"
             @click="enterDialog"
-          >确 定</el-button>
+>Confirm</el-button>
         </div>
       </template>
     </el-dialog>
@@ -182,7 +182,7 @@ import {
   updateSysDictionaryDetail,
   findSysDictionaryDetail,
   getSysDictionaryDetailList
-} from '@/api/sysDictionaryDetail' // 此处请自行替换地址
+} from '@/api/sysDictionaryDetail' // Please replace the address here.
 import { ref, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { formatBoolean, formatDate } from '@/utils/format'
@@ -208,21 +208,21 @@ const rules = ref({
   label: [
     {
       required: true,
-      message: '请输入展示值',
+message: 'Please enter the display value',
       trigger: 'blur'
     }
   ],
   value: [
     {
       required: true,
-      message: '请输入字典值',
+message: 'Please enter the dictionary value',
       trigger: 'blur'
     }
   ],
   sort: [
     {
       required: true,
-      message: '排序标记',
+message: 'Sort mark',
       trigger: 'blur'
     }
   ]
@@ -233,7 +233,7 @@ const total = ref(0)
 const pageSize = ref(10)
 const tableData = ref([])
 
-// 分页
+// paging
 const handleSizeChange = (val) => {
   pageSize.value = val
   getTableData()
@@ -244,7 +244,7 @@ const handleCurrentChange = (val) => {
   getTableData()
 }
 
-// 查询
+// Inquire
 const getTableData = async() => {
   const table = await getSysDictionaryDetailList({
     page: page.value,
@@ -283,16 +283,16 @@ const closeDialog = () => {
   }
 }
 const deleteSysDictionaryDetailFunc = async(row) => {
-  ElMessageBox.confirm('确定要删除吗?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
+ElMessageBox.confirm('Are you sure you want to delete?', 'Prompt', {
+confirmButtonText: 'OK',
+cancelButtonText: 'Cancel',
     type: 'warning'
   }).then(async() => {
     const res = await deleteSysDictionaryDetail({ ID: row.ID })
     if (res.code === 0) {
       ElMessage({
         type: 'success',
-        message: '删除成功'
+message: 'Delete successfully'
       })
       if (tableData.value.length === 1 && page.value > 1) {
         page.value--
@@ -322,7 +322,7 @@ const enterDialog = async() => {
     if (res.code === 0) {
       ElMessage({
         type: 'success',
-        message: '创建/更改成功'
+message: 'Creation/change successful'
       })
       closeDialog()
       getTableData()

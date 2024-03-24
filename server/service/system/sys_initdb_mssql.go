@@ -20,7 +20,7 @@ func NewMssqlInitHandler() *MssqlInitHandler {
 	return &MssqlInitHandler{}
 }
 
-// WriteConfig mssql回写配置
+//WriteConfig mssql writeback configuration
 func (h MssqlInitHandler) WriteConfig(ctx context.Context) error {
 	c, ok := ctx.Value("config").(config.Mssql)
 	if !ok {
@@ -36,7 +36,7 @@ func (h MssqlInitHandler) WriteConfig(ctx context.Context) error {
 	return global.GVA_VP.WriteConfig()
 }
 
-// EnsureDB 创建数据库并初始化 mssql
+// EnsureDB creates the database and initializes mssql
 func (h MssqlInitHandler) EnsureDB(ctx context.Context, conf *request.InitDB) (next context.Context, err error) {
 	if s, ok := ctx.Value("dbtype").(string); !ok || s != "mssql" {
 		return ctx, ErrDBTypeMismatch
@@ -46,13 +46,13 @@ func (h MssqlInitHandler) EnsureDB(ctx context.Context, conf *request.InitDB) (n
 	next = context.WithValue(ctx, "config", c)
 	if c.Dbname == "" {
 		return ctx, nil
-	} // 如果没有数据库名, 则跳出初始化数据
+	} //If there is no database name, jump out of the initialization data
 
 	dsn := conf.MssqlEmptyDsn()
 
 	mssqlConfig := sqlserver.Config{
 		DSN:               dsn, // DSN data source name
-		DefaultStringSize: 191, // string 类型字段的默认长度
+		DefaultStringSize: 191, //Default length of string type field
 	}
 
 	var db *gorm.DB
