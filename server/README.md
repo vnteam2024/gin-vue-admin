@@ -2,22 +2,22 @@
 
 ```shell
 ├── api
-│   └── v1
+│   └── v1
 ├── config
 ├── core
 ├── docs
 ├── global
 ├── initialize
-│   └── internal
+│   └── internal
 ├── middleware
 ├── model
-│   ├── request
-│   └── response
+│   ├── request
+│   └── response
 ├── packfile
 ├── resource
-│   ├── excel
-│   ├── page
-│   └── template
+│   ├── excel
+│   ├── page
+│   └── template
 ├── router
 ├── service
 ├── source
